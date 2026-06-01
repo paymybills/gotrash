@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -18,8 +19,16 @@ func main() {
 	// Define CLI flags
 	portFlag := flag.Int("port", 8080, "Port to listen on")
 	uploadDirFlag := flag.String("dir", "./data/uploads", "Directory to save uploaded files")
-	cleanIntervalFlag := flag.Duration("clean", 10*time.Second, "Interval at which to run the expired items janitor")
+	cleanIntervalFlag := flag.Duration("clean", 30*time.Second, "Interval at which to run the expired items janitor")
 	flag.Parse()
+
+	// Check environment variable PORT (standard on Cloud platforms like Railway)
+	port := *portFlag
+	if envPort := os.Getenv("PORT"); envPort != "" {
+		if p, err := strconv.Atoi(envPort); err == nil {
+			port = p
+		}
+	}
 
 	log.Println("Initializing gotrash server...")
 
@@ -39,7 +48,7 @@ func main() {
 	defer stop()
 
 	// 4. Initialize HTTP Server
-	addr := fmt.Sprintf(":%d", *portFlag)
+	addr := fmt.Sprintf(":%d", port)
 	srv, err := server.NewServer(addr, db)
 	if err != nil {
 		log.Fatalf("FATAL: Failed to initialize server: %v", err)
