@@ -114,6 +114,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
           Upload File
         </button>
+        <button class="tab-btn" id="tab-retrieve" onclick="switchTab('retrieve')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Retrieve Share
+        </button>
       </div>
 
       <!-- Text Paste Content -->
@@ -138,6 +142,17 @@
             </div>
           </div>
           <button class="remove-file-btn" onclick="clearFile()">✕</button>
+        </div>
+      </div>
+
+      <!-- Retrieve Content -->
+      <div class="tab-content" id="content-retrieve">
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 5px;">
+          <input type="text" id="retrieve-code" placeholder="Enter 8-character code or paste full share URL..." class="notion-input">
+          <button class="submit-btn" id="btn-retrieve-action" style="background: var(--text-main); color: var(--bg-surface);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            Fetch Share
+          </button>
         </div>
       </div>
 
@@ -242,7 +257,7 @@
 
     <!-- Footer -->
     <div class="footer-text">
-      gotrash &bull; built securely in Go &bull; <a href="https://github.com/google-deepmind" target="_blank">Google DeepMind Pair Programming</a>
+      gotrash &bull; built securely in Go
     </div>
   </div>
 

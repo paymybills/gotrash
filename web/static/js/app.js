@@ -11,9 +11,23 @@ function switchTab(tab) {
   if (tab === 'text') {
     document.getElementById('tab-text').classList.add('active');
     document.getElementById('content-text').classList.add('active');
-  } else {
+  } else if (tab === 'file') {
     document.getElementById('tab-file').classList.add('active');
     document.getElementById('content-file').classList.add('active');
+  } else if (tab === 'retrieve') {
+    document.getElementById('tab-retrieve').classList.add('active');
+    document.getElementById('content-retrieve').classList.add('active');
+  }
+
+  // Hide settings and main submit button if we are in Retrieve mode
+  const settingsGrid = document.querySelector('.settings-grid');
+  const submitShare = document.getElementById('submit-share');
+  if (tab === 'retrieve') {
+    if (settingsGrid) settingsGrid.style.display = 'none';
+    if (submitShare) submitShare.style.display = 'none';
+  } else {
+    if (settingsGrid) settingsGrid.style.display = '';
+    if (submitShare) submitShare.style.display = '';
   }
 }
 
@@ -199,7 +213,12 @@ function resetApp() {
   document.getElementById('form-card').style.display = 'block';
   document.getElementById('success-card').style.display = 'none';
   document.getElementById('paste-text').value = '';
+  
+  const retrieveInput = document.getElementById('retrieve-code');
+  if (retrieveInput) retrieveInput.value = '';
+  
   clearFile();
+  switchTab('text');
   if (submitBtn) {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Generate Ephemeral Share';
@@ -264,4 +283,37 @@ if (cliBtn && cliModal) {
   cliModal.onclick = (e) => {
     if (e.target === cliModal) closeModal();
   };
+}
+
+// Retrieve share action
+const retrieveBtn = document.getElementById('btn-retrieve-action');
+if (retrieveBtn) {
+  retrieveBtn.addEventListener('click', () => {
+    let input = document.getElementById('retrieve-code').value.trim();
+    if (!input) {
+      alert('Please enter a share code or link!');
+      return;
+    }
+    
+    // Extract ID (either 8 alphanumeric chars, or parse from full URL)
+    let code = input;
+    if (input.includes('/p/')) {
+      const parts = input.split('/p/');
+      code = parts[parts.length - 1].split('?')[0].split('#')[0].trim();
+    } else if (input.includes('/raw/')) {
+      const parts = input.split('/raw/');
+      code = parts[parts.length - 1].split('?')[0].split('#')[0].trim();
+    }
+    
+    // Strip trailing slashes or special characters
+    code = code.replace(/[^a-zA-Z0-9]/g, '');
+    
+    if (code.length === 0) {
+      alert('Could not resolve a valid share code from your input.');
+      return;
+    }
+    
+    // Redirect to the share page
+    window.location.href = '/p/' + code;
+  });
 }
