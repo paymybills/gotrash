@@ -1,0 +1,10 @@
+# Binaries
+gotrash
+
+# Data directory (containing local upload files)
+data/
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
