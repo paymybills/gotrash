@@ -1,4 +1,4 @@
-# 🗑️ gotrash
+# gotrash
 
 `gotrash` is a high-performance, single-binary, self-destructing file sharing and pastebin server written in Go. 
 
@@ -6,9 +6,9 @@ Designed with a clean, distraction-free **Notion-like aesthetic**, it strips awa
 
 ---
 
-## ✨ Features
+## Features
 
-- **Notion-Style UI:** Beautiful off-white canvas, thin gray structural borders, clean workspace panels, and emoji status indicator tags.
+- **Notion-Style UI:** Beautiful off-white canvas, thin gray structural borders, clean workspace panels, and status indicator tags.
 - **Single Binary Portability:** Frontend HTML, CSS, and client-side JavaScript assets are packed directly into the compiled executable using Go's native `go:embed`.
 - **Stateless/Stateful Hybrid:** Ephemeral metadata is held securely in-memory using concurrent mutex-protected maps, while file uploads stream directly to a designated persistent directory.
 - **Background GC (Janitor):** A automated background sweeper ticks at regular intervals to purge expired shares and shred physical files off the disk.
@@ -17,7 +17,7 @@ Designed with a clean, distraction-free **Notion-like aesthetic**, it strips awa
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 ### 1. Build from Source
 Ensure you have Go 1.22+ installed, then compile the zero-dependency executable:
@@ -38,7 +38,7 @@ Access the browser console at **`http://localhost:8080`**.
 
 ---
 
-## 💻 CLI Companion API Reference
+## CLI Companion API Reference
 
 You don't need a browser to share secrets, code pastes, or binary files. Use your terminal!
 
@@ -80,7 +80,7 @@ View the raw text output by visiting `/raw/vomtmVMX`.
 
 ---
 
-## ☁️ Cloud Deployment (Railway.app)
+## Cloud Deployment (Railway.app)
 
 Deploying `gotrash` on **[Railway.app](https://railway.app)** is automated and runs within the free resource limits:
 
