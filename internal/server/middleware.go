@@ -47,3 +47,23 @@ func (s *Server) withRecovery(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
+
+// withSecurityHeaders injects standard secure HTTP headers for frame protection and script white-listing.
+func (s *Server) withSecurityHeaders(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Frame-Options", "DENY")
+		w.Header().Set("X-Content-Type-Options", "nosniff")
+		w.Header().Set("X-XSS-Protection", "1; mode=block")
+		w.Header().Set("Referrer-Policy", "strict-origin-when-cross-origin")
+		
+		// Content Security Policy: strictly whitelist local domains and Google Fonts (Inter)
+		w.Header().Set("Content-Security-Policy", 
+			"default-src 'self'; " +
+			"style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+			"font-src 'self' https://fonts.gstatic.com; " +
+			"script-src 'self' 'unsafe-inline'; " +
+			"img-src 'self' data:;")
+			
+		next.ServeHTTP(w, r)
+	})
+}

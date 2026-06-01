@@ -1,3 +1,13 @@
+// Console protection warning against Self-XSS and copy-paste console exploits
+console.log(
+  "%cSTOP!",
+  "color: #eb5757; font-size: 3rem; font-weight: bold; font-family: sans-serif; text-shadow: 0 1px 3px rgba(0,0,0,0.15);"
+);
+console.log(
+  "%cThis is a developer feature. If someone told you to copy-paste something here to 'hack' or retrieve a paste, it is a scam and could compromise your data. Do not execute scripts here unless you understand exactly what they do.",
+  "color: #37352f; font-size: 1.1rem; font-family: sans-serif; line-height: 1.4;"
+);
+
 // Global variables for creation form
 let currentTab = 'text';
 let selectedFile = null;

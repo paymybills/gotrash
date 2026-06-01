@@ -47,8 +47,8 @@ func NewServer(addr string, store *store.Store) (*Server, error) {
 
 // Start boots the HTTP server with graceful timeouts.
 func (s *Server) Start(ctx context.Context) error {
-	// Wrap router with standard logging and recovery middleware
-	handler := s.withLogging(s.withRecovery(s.router))
+	// Wrap router with secure HTTP headers, logging, and recovery middleware
+	handler := s.withSecurityHeaders(s.withLogging(s.withRecovery(s.router)))
 
 	srv := &http.Server{
 		Addr:         s.addr,
